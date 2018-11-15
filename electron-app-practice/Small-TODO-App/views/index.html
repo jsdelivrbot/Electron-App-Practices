@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Window</title>
+</head>
+<body>
+    <h1>My Todos</h1>
+    <br>
+    <ul>
+
+    </ul>
+</body>
+<script>
+    const electron = require('electron');
+    const {ipcRenderer} = electron;
+
+    ipcRenderer.on('todoItemAdd' , (event, item)=>{
+        //alert(item);
+        //document.querySelector('ul').appendChild(`<li>${item}</li>`);
+        document.querySelector('ul').innerHTML += `<li>${item}</li>`;
+        //debugger
+    });
+    ipcRenderer.on('clearTodo' , (event)=>{
+        //alert(item);
+        //document.querySelector('ul').appendChild(`<li>${item}</li>`);
+       // document.querySelector('ul').innerHTML += `<li>${item}</li>`;
+        //debugger
+        document.querySelector('ul').innerHTML = "";
+    });
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Video Info</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label for="video">Select a video</label>
+               <br>
+            <input type="file" name="video" accept="video/*" value="Select Video">
+        </div>
+        <input type="submit" value="Get Length">
+    </form>
+    <h2></h2>
+    <script>
+        const electron  = require('electron');
+        // to send and get value to node app
+        const { ipcRenderer } = electron;
+
+        document.querySelector('form').addEventListener('submit', (event)=>{
+            event.preventDefault();
+            const {path} = document.querySelector('input').files[0];
+            ipcRenderer.send('getVideoFileLength', path);
+        }); 
+
+        ipcRenderer.on('videoRenderedDuration',(event,duration)=>{
+            document.querySelector('h2').innerHTML = `Video Length: ${duration}`;
+        });
+    </script>
+</body>
+</html>
